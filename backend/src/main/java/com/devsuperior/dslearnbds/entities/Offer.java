@@ -97,6 +97,10 @@ public class Offer implements Serializable {
 		return resourses;
 	}
 
+	public List<Topic> getTopics() {
+		return topics;
+	}
+	
 	@Override
 	public int hashCode() {
 		final int prime = 31;
