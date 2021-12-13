@@ -12,7 +12,9 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
 import com.devsuperior.dslearnbds.services.exceptions.DatabaseException;
+import com.devsuperior.dslearnbds.services.exceptions.ForbiddenException;
 import com.devsuperior.dslearnbds.services.exceptions.ResourceNotFoundException;
+import com.devsuperior.dslearnbds.services.exceptions.UnauthorizedException;
 
 @ControllerAdvice
 public class ResourceExceptionHandler {
@@ -31,7 +33,7 @@ public class ResourceExceptionHandler {
 	  }
 	  
 	  @ExceptionHandler(DatabaseException.class)
-	  public ResponseEntity<StandardError> entiytNotFound(DatabaseException e, HttpServletRequest request) {
+	  public ResponseEntity<StandardError> database(DatabaseException e, HttpServletRequest request) {
 		  HttpStatus status = HttpStatus.BAD_REQUEST;
 		  StandardError err = new StandardError();
 		  err.setTimestamp(Instant.now());
@@ -57,10 +59,19 @@ public class ResourceExceptionHandler {
 		  for (FieldError f : e.getBindingResult().getFieldErrors()) {
 			  err.addError(f.getField(), f.getDefaultMessage());
 		  }
-		  
 		  // retorna o obj err na forma de status do response
 		  return ResponseEntity.status(status).body(err);
-		  
 	  }
-	  
+
+	  @ExceptionHandler(ForbiddenException.class)
+	  public ResponseEntity<OAuthCustomError> forbidden(ForbiddenException e, HttpServletRequest request) {
+		  OAuthCustomError err = new OAuthCustomError("Forbidden", e.getMessage());
+		  return ResponseEntity.status(HttpStatus.FORBIDDEN).body(err);
+	  }
+ 
+	  @ExceptionHandler(UnauthorizedException.class)
+	  public ResponseEntity<OAuthCustomError> forbidden(UnauthorizedException e, HttpServletRequest request) {
+		  OAuthCustomError err = new OAuthCustomError("Unauthorized", e.getMessage());
+		  return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(err);
+	  }	  
 }
