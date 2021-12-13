@@ -23,11 +23,11 @@ public class Section implements Serializable {
 	private Integer position;
 	private String imgUri;
 	
-	@ManyToOne()
+	@ManyToOne
 	@JoinColumn(name = "resource_id")
 	private Resource resource;
 	
-	@ManyToOne()
+	@ManyToOne
 	@JoinColumn(name = "prerequisite_id")
 	private Section prerequisite;
 	
