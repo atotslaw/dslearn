@@ -5,7 +5,7 @@ import java.time.Instant;
 
 import com.devsuperior.dslearnbds.entities.Notification;
 
-public class NotificationDTO  implements Serializable {
+public class NotificationDTO implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	private Long id;
