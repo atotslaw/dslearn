@@ -68,8 +68,6 @@ public class Course implements Serializable {
 	public void setImgGrayUri(String imgGrayUri) {
 		this.imgGrayUri = imgGrayUri;
 	}
-	
-	
 
 	public List<Offer> getOffers() {
 		return offers;
